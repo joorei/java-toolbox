@@ -65,7 +65,7 @@ public interface Crc32Converter {
 	 * @param bytes The bytes to transform.
 	 * @return The transformed bytes.
 	 */
-	public String toString(final byte[] bytes);
+	public StringBuilder toString(final byte[] bytes);
 
 	/**
 	 * Transforms the given bytes into a {@link String} representation.
@@ -73,7 +73,7 @@ public interface Crc32Converter {
 	 * @param bytes The bytes to transform.
 	 * @return The transformed bytes.
 	 */
-	public String toString(final int bytes);
+	public StringBuilder toString(final int bytes);
 
 	/**
 	 * Transforms the given bytes into a {@link String} representation.
@@ -81,6 +81,6 @@ public interface Crc32Converter {
 	 * @param bytes The bytes to transform.
 	 * @return The transformed bytes.
 	 */
-	public String toString(final long bytes);
+	public StringBuilder toString(final long bytes);
 
 }
