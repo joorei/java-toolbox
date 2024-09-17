@@ -206,6 +206,7 @@ public abstract class TreeBuilder<E, N extends TreeNodeInterface<N>> {
 		// stop searching for a valid parent if the root was reached or a valid parent
 		// was found
 		while (newParent.getParent() != null && !isValidParent(newParent, childNode)) {
+			// FIXME: what should happen in case of `null`?
 			newParent = newParent.getParent();
 		}
 		return newParent;

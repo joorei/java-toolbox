@@ -5,33 +5,38 @@ import java.util.Optional;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
-@org.eclipse.jdt.annotation.NonNullByDefault
 public class Optionals {
 
 	/**
 	 * 
-	 * @param <T>
-	 * @param v
-	 * @return
+	 * @param <T>   the type of the value to be wrapped in the {@link Optional}
+	 * @param value the value to be wrapped in the {@link Optional}
+	 * @return If the given value is non-<code>null</code>, an non-empty
+	 *         {@link Optional} instance containing the value. An empty
+	 *         {@link Optional} instance otherwise.
 	 */
-	public static <T> @NonNull Optional<@NonNull T> ofNullable(@Nullable T v) {
-		return Optional.ofNullable(v);
+	@SuppressWarnings("null")
+	public static <T> @NonNull Optional<@NonNull T> ofNullable(final @Nullable T value) {
+		return Optional.ofNullable(value);
 	}
+
 	/**
-	 * 
-	 * @param <T>
-	 * @param v
-	 * @return
+	 * @param <T>   the type of the value to be wrapped in the {@link Optional}
+	 * @param value the value to be wrapped in the {@link Optional}
+	 * @return An non-empty {@link Optional}
+	 * @throws NullPointerException if the given value is <code>null</code>.
 	 */
-	public static <@NonNull T> @NonNull Optional<T> of(@Nullable T v) {
-		return Optional.of(v);
+	@SuppressWarnings("null")
+	public static <@NonNull T> Optional<T> of(final T value) {
+		return Optional.of(value);
 	}
-	
+
+	@SuppressWarnings("null")
 	public static <T> @NonNull Optional<@NonNull T> empty() {
 		return Optional.empty();
 	}
-	
-	public static boolean anyPresent(Optional<?> ...optionals) {
+
+	public static boolean anyPresent(final Optional<?>... optionals) {
 		for (final Optional<?> optional : optionals) {
 			if (optional.isPresent()) {
 				return true;
