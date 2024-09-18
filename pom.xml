@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>java-toolbox</artifactId>
-	<version>0.3</version>
+	<version>0.3.1</version>
 	<name>Toolbox for Java ${java.version}</name>
 	<description>A variety of helper classes and interfaces compatible with the Java ${java.version} JRE.</description>
 
