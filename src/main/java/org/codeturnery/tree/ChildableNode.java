@@ -65,4 +65,6 @@ public interface ChildableNode<N extends ChildableNode<N>> {
 	 *         (e.g. an empty directory).
 	 */
 	public Optional<List<N>> getChildren();
+
+	public int getChildrenCount();
 }

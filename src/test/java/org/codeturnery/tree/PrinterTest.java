@@ -5,26 +5,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.codeturnery.typesystem.Iterables;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings({"null", "javadoc"})
 public class PrinterTest {
-	
-	private static final String OUTPUT_A = "• M0-1/1, 2×DIRECTORY | Stats for children: (ARCHIVE:⟦1,1⟧) (DIRECTORY:⟦1,1⟧); 4 children in the 2 non-leaf nodes were merged as follows:\n"
-			+ "  • M1-0/2, 2×ARCHIVE\n"
-			+ "  • M1-1/2, 2×DIRECTORY | Stats for children: (TEXT:⟦1,1⟧); 2 children in the 2 non-leaf nodes were merged as follows:\n"
-			+ "    • M2-0/1, 2×TEXT\n"
-			+ "• M0-1/1, 4×DIRECTORY | Stats for children: (ARCHIVE:⟦1,1⟧) (DIRECTORY:⟦1,1⟧); 8 children in the 4 non-leaf nodes were merged as follows:\n"
-			+ "  • M1-0/2, 4×ARCHIVE\n"
-			+ "  • M1-1/2, 4×DIRECTORY | Stats for children: (TEXT:⟦1,1⟧) (IMAGE:⟦2,5⟧,x̄=14÷4=3.5); 18 children in the 4 non-leaf nodes were merged as follows:\n"
-			+ "    • M2-0/1, 4×TEXT, 14×IMAGE\n"
-			+ "• M0-1/1, 2×DIRECTORY | Stats for children: (ARCHIVE:⟦1,1⟧) (DIRECTORY:⟦1,1⟧); 4 children in the 2 non-leaf nodes were merged as follows:\n"
-			+ "  • M1-0/2, 2×ARCHIVE\n"
-			+ "  • M1-1/2, 2×DIRECTORY | Stats for children: (TEXT:⟦1,1⟧) (IMAGE:⟦1,1⟧); 4 children in the 2 non-leaf nodes were merged as follows:\n"
-			+ "    • M2-0/1, 2×TEXT, 2×IMAGE\n";
+	private static final String OUTPUT_A = "• M0-1/3, 2×DIRECTORY | Stats for children: (ARCHIVE:⟦1,1⟧) (DIRECTORY:⟦1,1⟧); 4 children in the 2 non-leaf nodes were merged as follows:\n"
+			+ "  • M1-1/2, 2×ARCHIVE\n"
+			+ "  • M1-2/2, 2×DIRECTORY | Stats for children: (IMAGE:⟦1,1⟧) (TEXT:⟦1,1⟧); 4 children in the 2 non-leaf nodes were merged as follows:\n"
+			+ "    • M2-1/1, 2×TEXT, 2×IMAGE\n"
+			+ "• M0-2/3, 3×DIRECTORY | Stats for children: (ARCHIVE:⟦1,1⟧) (DIRECTORY:⟦1,1⟧); 6 children in the 3 non-leaf nodes were merged as follows:\n"
+			+ "  • M1-1/2, 3×ARCHIVE\n"
+			+ "  • M1-2/2, 3×DIRECTORY | Stats for children: (TEXT:⟦1,1⟧); 3 children in the 3 non-leaf nodes were merged as follows:\n"
+			+ "    • M2-1/1, 3×TEXT\n"
+			+ "• M0-3/3, 4×DIRECTORY | Stats for children: (ARCHIVE:⟦1,1⟧) (DIRECTORY:⟦1,1⟧); 8 children in the 4 non-leaf nodes were merged as follows:\n"
+			+ "  • M1-1/2, 4×ARCHIVE\n"
+			+ "  • M1-2/2, 4×DIRECTORY | Stats for children: (IMAGE:⟦2,5⟧,x̄=14÷4=3.5) (TEXT:⟦1,1⟧); 18 children in the 4 non-leaf nodes were merged as follows:\n"
+			+ "    • M2-1/1, 4×TEXT, 14×IMAGE\n";
 	private static final String OUTPUT_A2 = "dir E\n"
 			+ "dir EA\n"
 			+ "dir F\n"
@@ -44,13 +42,15 @@ public class PrinterTest {
 
 		final var rootNode = getNoneOneMultipleTestTree();
 
-		final Stream<NodeMerge<TestNode>> topMerges = merger
-				.separateAndCreateMerges(rootNode.getChildren().orElseThrow());
+		final List<NodeMerge<TestNode>> topMerges = merger
+				.separateAndCreateMerges(rootNode.getChildren().orElseThrow()).sorted().toList();
 
 		final var statisticsCalculator = new StatisticsCalculator<>(grouper);
 		final var outputBuilder = new OutputBuilder(config.getPredicateNaming(), statisticsCalculator, grouper);
-		topMerges.forEach(outputBuilder::addMerge);
-		
+		for (int i = 0; i < topMerges.size(); i++) {
+			outputBuilder.addMerge(topMerges.get(i), i + 1, topMerges.size());
+		}
+
 		assertEquals(OUTPUT_A, outputBuilder.build());
 		
 		// get only those hashes for which at least three non-leaves were found
@@ -226,7 +226,13 @@ public class PrinterTest {
 					new TestNode("text.txt")
 				))
 			)),
-			new TestNode("dir B", List.of(
+			new TestNode("dir B1", List.of(
+					new TestNode("zip.zip"),
+					new TestNode("dir BA", List.of(
+						new TestNode("text.txt")
+					))
+				)),
+			new TestNode("dir B2", List.of(
 				new TestNode("zip.zip"),
 				new TestNode("dir BA", List.of(
 					new TestNode("text.txt")

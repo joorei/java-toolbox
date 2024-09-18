@@ -47,4 +47,9 @@ public class ChildFilteringNode<N extends ChildableNode<N>> implements Childable
 	public Optional<List<ChildFilteringNode<N>>> getChildren() {
 		return this.getChildrenStream().map(Stream::toList);
 	}
+
+	@Override
+	public int getChildrenCount() {
+		return this.baseNode.getChildrenCount();
+	}
 }

@@ -3,7 +3,7 @@ package org.codeturnery.tree;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class Group<N> {
+public class Group<N> implements Comparable<Group<N>> {
 	private final Predicate<N> predicate;
 	private final List<N> nodes;
 
@@ -18,5 +18,10 @@ public class Group<N> {
 
 	public List<N> getNodes() {
 		return this.nodes;
+	}
+
+	@Override
+	public int compareTo(final Group<N> other) {
+		return this.nodes.size() - other.nodes.size();
 	}
 }
