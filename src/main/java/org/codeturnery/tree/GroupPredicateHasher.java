@@ -23,6 +23,15 @@ import org.eclipse.jdt.annotation.Nullable;
 public class GroupPredicateHasher<N extends ChildableNode<N>> extends Hasher<N> {
 	private final Map<Predicate<N>, HashApproach> hashApproaches;
 
+	/**
+	 * Creates a new instance using the given grouper and hashing approaches.
+	 * 
+	 * @param grouper        the given implementation determines how children in a
+	 *                       node are grouped
+	 * @param hashApproaches determines how different groups should be hashed,
+	 *                       groups are identified by the predicate that matched
+	 *                       items sorted into the group
+	 */
 	public GroupPredicateHasher(final Grouper<N> grouper, final Map<Predicate<N>, HashApproach> hashApproaches) {
 		super(grouper);
 		this.hashApproaches = hashApproaches;

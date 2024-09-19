@@ -5,6 +5,9 @@ import java.util.Base64;
 
 import org.eclipse.jdt.annotation.NonNull;
 
+/**
+ * Provides basic logic to handle newlines in strings.
+ */
 public class TextBytesUtil {
 	/**
 	 * Byte representation of an ASCII and UTF-8 newline character.
@@ -114,20 +117,42 @@ public class TextBytesUtil {
 		return true;
 	}
 
+	/**
+	 * @param fileReadBuffer the buffer to check the two last characters of
+	 * @return <code>true</code> if the last two bytes in the given buffer are a
+	 *         line feed followed by a carriage return, i.e. a typical newline,
+	 *         <code>false</code> otherwise
+	 */
 	public static boolean endsWithLfAndCr(final ByteBuffer fileReadBuffer) {
 		return fileReadBuffer.get(fileReadBuffer.limit() - 1) == LF_BYTE
 				&& fileReadBuffer.get(fileReadBuffer.limit() - 2) == CR_BYTE;
 
 	}
 
+	/**
+	 * @param b the byte to check if it is a carriage return character
+	 * @return <code>true</code> if the given byte is a carriage return character,
+	 *         otherwise <code>false</code>
+	 */
 	public static boolean isCarriageReturn(final byte b) {
 		return b == CR_BYTE;
 	}
 
+	/**
+	 * @param b the byte to check if it is a line feed character
+	 * @return <code>true</code> if the given byte is a line feed character,
+	 *         otherwise <code>false</code>
+	 */
 	public static boolean isLineFeed(final byte b) {
 		return b == LF_BYTE;
 	}
 
+	/**
+	 * Encode all the given byte to BASE64.
+	 * 
+	 * @param bytes the bytes to convert
+	 * @return the string containing the given data as BASE64
+	 */
 	public static String bytesToBsae64(final byte[] bytes) {
 		@SuppressWarnings("null")
 		final @NonNull String result = Base64.getEncoder().encodeToString(bytes);

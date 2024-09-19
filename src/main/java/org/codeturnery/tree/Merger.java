@@ -8,9 +8,19 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
 
+/**
+ * Provides logic to merge nodes into instances representing them.
+ * 
+ * @param <N> the type of the merged nodes
+ */
 public class Merger<N extends ChildableNode<N>> {
 	private final Hasher<N> hasher;
 
+	/**
+	 * Creates an instance based on the provided hasher.
+	 * 
+	 * @param hasher provides the logic to create a hash for a given node
+	 */
 	public Merger(final Hasher<N> hasher) {
 		this.hasher = hasher;
 	}

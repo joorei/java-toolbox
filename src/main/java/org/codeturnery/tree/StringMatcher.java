@@ -3,6 +3,11 @@ package org.codeturnery.tree;
 import java.util.Set;
 import java.util.function.Predicate;
 
+/**
+ * Predicate to match strings using prefixes and suffixes.
+ * 
+ * @param <T> the type of nodes this predicate can be applied on
+ */
 abstract public class StringMatcher<T> implements Predicate<T> {
 
 	private final Set<String> suffixes;

@@ -5,6 +5,10 @@ import java.io.InputStream;
 import java.security.DigestException;
 import java.security.MessageDigest;
 
+/**
+ * Provides basic logic to transfer bytes and calculate digests, attempting to
+ * do this in a performant way.
+ */
 public class BytesUtil {
 	/**
 	 * Read the given stream into the given buffer until it is full or the stream is

@@ -6,6 +6,8 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 /**
+ * Wraps a given node and automatically filters its children.
+ * 
  * @param <N> the type of the original base node and its children
  */
 public class ChildFilteringNode<N extends ChildableNode<N>> implements ChildableNode<ChildFilteringNode<N>> {
@@ -39,6 +41,9 @@ public class ChildFilteringNode<N extends ChildableNode<N>> implements Childable
 		return new ChildFilteringNode<>(this, filter, recursive).getChildrenStream();
 	}
 
+	/**
+	 * @return The node wrapped by this instance.
+	 */
 	public ChildableNode<N> getBaseNode() {
 		return this.baseNode;
 	}

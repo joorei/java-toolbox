@@ -3,8 +3,6 @@ package org.codeturnery.tree;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 /**
  * Represents multiple nodes merged together.
  *
@@ -21,23 +19,37 @@ public class NodeMerge<N extends ChildableNode<N>> implements Comparable<NodeMer
 	 */
 	private final List<NodeSubMerge<N>> submerges;
 
-	public NodeMerge(final List<N> leaves, final List<NodeSubMerge<N>> submerges) {
+	NodeMerge(final List<N> leaves, final List<NodeSubMerge<N>> submerges) {
 		this.leaves = leaves;
 		this.submerges = submerges;
 	}
 
+	/**
+	 * @return the nodes merged into this instance
+	 */
 	public Stream<N> getMergedNodesStream() {
 		return Stream.concat(getLeaves().stream(), getNonLeavesStream());
 	}
 
+	/**
+	 * @return the leaf nodes merged into this instance, i.e. nodes that can't have
+	 *         children
+	 */
 	public List<N> getLeaves() {
 		return this.leaves;
 	}
 
+	/**
+	 * @return merges created from the non-leaf nodes in this instance
+	 */
 	public List<NodeSubMerge<N>> getSubmerges() {
 		return this.submerges;
 	}
 
+	/**
+	 * @return the non-leaf nodes merged into this instance, i.e. nodes that can
+	 *         have children
+	 */
 	public Stream<N> getNonLeavesStream() {
 		return this.submerges.stream().map(NodeSubMerge::getParents).flatMap(List::stream).distinct();
 	}
@@ -61,14 +73,23 @@ public class NodeMerge<N extends ChildableNode<N>> implements Comparable<NodeMer
 		return other.getLeavesCount() - getLeavesCount();
 	}
 
+	/**
+	 * @return number of leaf nodes merged in this instance
+	 */
 	public int getLeavesCount() {
 		return getLeaves().size();
 	}
 
+	/**
+	 * @return number of merges created from non-leaf nodes in this instance
+	 */
 	public int getSubMergeCount() {
 		return getSubmerges().size();
 	}
 
+	/**
+	 * @return number of nodes merged in this instance
+	 */
 	public int getMergedNodesCount() {
 		return Math.toIntExact(getMergedNodesStream().count());
 	}

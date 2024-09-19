@@ -120,6 +120,13 @@ abstract public class Hasher<N extends ChildableNode<N>> {
 
 	}
 
+	/**
+	 * Get the hash of the given group. Will be calculated and cached if this is the
+	 * first time it is requested.
+	 * 
+	 * @param group the group to retrieve the hash for
+	 * @return the hash of the given group
+	 */
 	public int getHash(final Group<N> group) {
 		return this.groupToHashMapping.computeIfAbsent(group, this::calculateHash);
 	}

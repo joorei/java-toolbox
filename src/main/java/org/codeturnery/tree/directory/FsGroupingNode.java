@@ -46,6 +46,9 @@ public class FsGroupingNode extends AbstractChildableNode<FsGroupingNode> implem
 		this.parent = parent;
 	}
 
+	/**
+	 * @return the path in a file system this node instance represents
+	 */
 	public Path getPath() {
 		return this.path;
 	}

@@ -48,7 +48,7 @@ public class PrinterTest {
 		final var statisticsCalculator = new StatisticsCalculator<>(grouper);
 		final var outputBuilder = new OutputBuilder(config.getPredicateNaming(), statisticsCalculator, grouper);
 		for (int i = 0; i < topMerges.size(); i++) {
-			outputBuilder.addMerge(topMerges.get(i), i + 1, topMerges.size());
+			outputBuilder.addMerge(topMerges.get(i), topMerges.size());
 		}
 
 		assertEquals(OUTPUT_A, outputBuilder.build());

@@ -38,6 +38,10 @@ public class Grouper<N extends ChildableNode<N>> {
 
 	private final Map<ChildableNode<N>, Optional<List<Group<N>>>> nodeToGroupsMapping = new HashMap<>();
 
+	/**
+	 * @param predicates the predicates to apply to items to group them into a group
+	 *                   corresponding to the matching predicate instance
+	 */
 	public Grouper(final Iterable<Predicate<N>> predicates) {
 		this.predicates = predicates;
 	}

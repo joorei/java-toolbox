@@ -66,5 +66,9 @@ public interface ChildableNode<N extends ChildableNode<N>> {
 	 */
 	public Optional<List<N>> getChildren();
 
+	/**
+	 * @return number of children in this node; 0, if the node can't have any
+	 *         children
+	 */
 	public int getChildrenCount();
 }

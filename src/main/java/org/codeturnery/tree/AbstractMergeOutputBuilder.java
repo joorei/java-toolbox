@@ -6,6 +6,12 @@ import java.util.Map.Entry;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+/**
+ * Provides a starting point to implement the conversion of {@link NodeMerge}
+ * instances into a different structure, format or representation.
+ * 
+ * @param <N> the type of nodes merged
+ */
 abstract public class AbstractMergeOutputBuilder<N extends ChildableNode<N>> {
 
 	/**
@@ -21,6 +27,8 @@ abstract public class AbstractMergeOutputBuilder<N extends ChildableNode<N>> {
 	 * Instance to group nodes.
 	 */
 	private final Grouper<N> grouper;
+
+	private int addedMerges = 0;
 
 	/**
 	 * Create a new instance, using the given predicate naming and instances for
@@ -42,11 +50,12 @@ abstract public class AbstractMergeOutputBuilder<N extends ChildableNode<N>> {
 	 * Adds the information from the given merge as strings to the string builder.
 	 * 
 	 * @param merge the instance to add
-	 * @param index
-	 * @param count
+	 * @param count the amount of merges that will be added to this instance in
+	 *              total
 	 */
-	public void addMerge(final NodeMerge<N> merge, final int index, final int count) {
-		addMerge(merge, 0, getMergeName(merge, index, count, 0));
+	public void addMerge(final NodeMerge<N> merge, final int count) {
+		final String mergeName = getMergeName(merge, ++this.addedMerges, count, 0);
+		addMerge(merge, 0, mergeName);
 		this.addMergeSeparator();
 	}
 

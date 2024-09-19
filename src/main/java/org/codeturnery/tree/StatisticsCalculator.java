@@ -15,6 +15,11 @@ public class StatisticsCalculator<N extends ChildableNode<N>> {
 	 */
 	private final Grouper<N> grouper;
 
+	/**
+	 * Create an instance using the given grouper.
+	 * 
+	 * @param grouper the instance to create group from the children of a node
+	 */
 	public StatisticsCalculator(final Grouper<N> grouper) {
 		this.grouper = grouper;
 	}

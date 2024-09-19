@@ -25,15 +25,27 @@ public class GroupingStats {
 	 */
 	private int groupCount = 0;
 
-	public GroupingStats(final int firstGroupChildCount) {
+	GroupingStats(final int firstGroupChildCount) {
 		this.minimalCount = firstGroupChildCount;
 		this.maximalCount = firstGroupChildCount;
 	}
 
+	/**
+	 * From the group information that were added from different merges, this is the
+	 * number of items in the group with the least number of items.
+	 * 
+	 * @return the number of items in the smallest group
+	 */
 	public int getMinimalCount() {
 		return this.minimalCount;
 	}
 
+	/**
+	 * From the group information that were added from different merges, this is the
+	 * number of items in the group with the most number of items.
+	 * 
+	 * @return the number of items in the biggest group
+	 */
 	public int getMaximalCount() {
 		return this.maximalCount;
 	}
@@ -45,6 +57,16 @@ public class GroupingStats {
 		return this.childSum / (float) this.groupCount;
 	}
 
+	/**
+	 * Add the child count of a group of a merge.
+	 * <p>
+	 * Increases the number of groups from merges by one and adds the node count to
+	 * the sum of all items from previously added groups. If this group has less or
+	 * more items than any of the previously added groups, the value will be set as
+	 * new minimum/maximum.
+	 * 
+	 * @param nodeCount the number of items in a group of a merge
+	 */
 	public void addGroupChildCount(int nodeCount) {
 		if (nodeCount > this.maximalCount) {
 			this.maximalCount = nodeCount;
@@ -57,10 +79,17 @@ public class GroupingStats {
 		this.groupCount += 1;
 	}
 
+	/**
+	 * @return the sum of all items in all previously added groups
+	 */
 	public int getChildSum() {
 		return this.childSum;
 	}
 
+	/**
+	 * @return the number of groups that were added to this instance from different
+	 *         merges
+	 */
 	public int getGroupCount() {
 		return this.groupCount;
 	}

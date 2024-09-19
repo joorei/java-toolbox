@@ -5,6 +5,10 @@ import java.util.Optional;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
+/**
+ * Provides type conversions for {@link Optional} instances, especially to set
+ * the correct nullable/non-nullable types of contained elements.
+ */
 public class Optionals {
 
 	/**
@@ -31,11 +35,23 @@ public class Optionals {
 		return Optional.of(value);
 	}
 
+	/**
+	 * @param <T> the type of the (theoretically) contained value
+	 * @return an empty optional, with the explicit type information that the
+	 *         (theoretically) contained value can not be <code>null</code>
+	 */
 	@SuppressWarnings("null")
 	public static <T> @NonNull Optional<@NonNull T> empty() {
 		return Optional.empty();
 	}
 
+	/**
+	 * Tests if in any of the given {@link Optional} instances a value is present.
+	 * 
+	 * @param optionals the instances to test
+	 * @return <code>true</code>, if any of the given instances contains a value,
+	 *         <code>false</code> otherwise
+	 */
 	public static boolean anyPresent(final Optional<?>... optionals) {
 		for (final Optional<?> optional : optionals) {
 			if (optional.isPresent()) {
