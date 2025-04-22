@@ -158,5 +158,4 @@ public class TextBytesUtil {
 		final @NonNull String result = Base64.getEncoder().encodeToString(bytes);
 		return result;
 	}
-
 }
