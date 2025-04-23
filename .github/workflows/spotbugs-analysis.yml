@@ -1,0 +1,44 @@
+name: SpotBugs Analysis
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  spotbugs:
+    name: Run SpotBugs
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'adopt'
+
+    - name: Cache Maven packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+
+    - name: Install dependencies
+      run: mvn install -DskipTests
+
+    - name: Run SpotBugs
+      run: mvn spotbugs:spotbugs
+
+    - name: Upload SpotBugs Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: spotbugs-report
+        path: target/spotbugsXml.xml
